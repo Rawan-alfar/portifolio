@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">بورتفوليو - روان الفار</title>
+    <!-- تحميل Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تحميل Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+    <style>
+        /* تعريف الخطوط الافتراضية */
+        body {
+            font-family: 'Cairo', 'Inter', sans-serif;
+            background-color: #0d1117; 
+            color: #f0f6fc;
+        }
+        /* تصميم الأزرار التفاعلية */
+        .btn-primary {
+            @apply px-6 py-3 bg-blue-600 text-white font-bold rounded-xl transition duration-300 hover:bg-blue-700 shadow-lg hover:shadow-blue-500/50;
+        }
+        .project-card {
+            @apply bg-[#161b22] p-6 rounded-xl shadow-2xl transition duration-300 transform hover:scale-[1.02] hover:shadow-blue-500/30 border border-gray-700;
+        }
+        .section-heading {
+            @apply text-4xl font-extrabold mb-8 pb-3 border-b-2 border-blue-600 inline-block;
+        }
+        .skill-badge {
+            @apply inline-block bg-gray-700 text-blue-300 text-sm font-medium px-4 py-1 rounded-full mr-2 mb-2;
+        }
+        /* لتغيير اتجاه النص في القائمة النقطية بناءً على الاتجاه العام */
+        [dir="ltr"] .rtl-list {
+            padding-left: 1.5rem; /* تعديل المسافة البادئة لـ LTR */
+            padding-right: 0;
+            list-style: disc;
+        }
+        [dir="rtl"] .rtl-list {
+            padding-right: 1.5rem; /* تعديل المسافة البادئة لـ RTL */
+            padding-left: 0;
+            list-style: disc;
+        }
+        
+        /* Aspect Ratio for Videos (16:9) */
+        .aspect-16-9 {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 9 / 16 * 100 */
+        }
+        .aspect-16-9 iframe,
+        .aspect-16-9 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* لتمرير البطاقات الأفقية */
+        .horizontal-scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 1rem;
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: #3b82f6 #161b22; /* Thumb and Track colors */
+        }
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #3b82f6;
+            border-radius: 10px;
+        }
+        .horizontal-scroll-container::-webkit-scrollbar-track {
+            background-color: #161b22;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- شريط التنقل (Navigation Bar) -->
+    <header class="sticky top-0 z-10 bg-[#161b22]/95 backdrop-blur-sm shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-400" data-i18n="header_name">روان الفار</h1>
+            <div class="flex items-center space-x-4 space-x-reverse md:space-x-8 md:space-x-reverse">
+                <div class="space-x-4 space-x-reverse text-sm font-semibold hidden md:flex">
+                    <a href="#about" class="hover:text-blue-400 transition" data-i18n="nav_about">عني</a>
+                    <a href="#projects" class="hover:text-blue-400 transition" data-i18n="nav_projects">المشاريع</a>
+                    <a href="#prototypes" class="hover:text-blue-400 transition" data-i18n="nav_prototypes">البروتوتايبات</a>
+                    <a href="#skills" class="hover:text-blue-400 transition" data-i18n="nav_skills">المهارات التقنية</a>
+                    <a href="#contact" class="hover:text-blue-400 transition" data-i18n="nav_contact">تواصل</a>
+                </div>
+                <!-- زر تبديل اللغة -->
+                <button id="lang-toggle" class="px-3 py-1 bg-gray-700 text-blue-300 text-sm font-medium rounded-lg hover:bg-gray-600 transition duration-200">
+                    English
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- القسم الافتتاحي (Hero Section) -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        <div class="mb-6">
+            <div class="mx-auto w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center mb-4 border-4 border-blue-600">
+                <i data-lucide="code-square" class="w-10 h-10 text-blue-400"></i>
+            </div>
+        </div>
+        <h2 class="text-5xl md:text-6xl font-extrabold text-white mb-4" data-i18n="hero_h2">أهلاً، أنا روان! مبرمجة ألعاب Unity</h2>
+        <p class="text-xl text-gray-400 mb-8 max-w-3xl mx-auto" data-i18n="hero_p">
+            خبرة ٤ سنوات في تطوير الألعاب باستخدام محرك Unity ولغة C#. متخصصة في برمجة أنظمة القتال الديناميكية، الذكاء الاصطناعي (Oversive Tree)، وحلول الألغاز المعقدة. فخورة بنشر لعبتي **KoroNeko** على Steam.
+        </p>
+        <a href="#projects" class="btn-primary" data-i18n="hero_btn">شاهد مشاريعي</a>
+    </section>
+
+    <!-- قسم عني (About Me) -->
+    <section id="about" class="py-20 bg-[#0d1117] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="section-heading text-center mx-auto" data-i18n="about_h3">عني وخبرتي</h3>
+            <div class="grid md:grid-cols-2 gap-12 mt-10 items-center">
+                <div>
+                    <p class="text-lg text-gray-300 mb-4 leading-relaxed" data-i18n="about_p1">
+                        بدأت مسيرتي في مجال تطوير الألعاب منذ ٤ سنوات، مع شغف خاص بتحويل الأفكار المعقدة إلى كود فعال وممتع. أركز على بناء بنية كود متينة وقابلة للتوسع (Scalable Architecture) تضمن سهولة الصيانة والعمل الجماعي.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6 leading-relaxed" data-i18n="about_p2">
+                        خلال هذه السنوات، اكتسبت خبرة عميقة في التعامل مع أدوات Unity المختلفة (مثل DOTS، URP/HDRP، وTimeline) وأتقنت استخدام أنماط التصميم (Design Patterns) المناسبة لبرمجة الألعاب.
+                    </p>
+                    <a href="رابط-سيرتك-الذاتية.pdf" target="_blank" class="text-blue-400 hover:text-blue-500 font-semibold flex items-center" data-i18n="about_cv_link">
+                        تحميل السيرة الذاتية (CV) <i data-lucide="download" class="w-5 h-5 mr-2"></i>
+                    </a>
+                </div>
+                <div class="bg-[#161b22] p-8 rounded-xl border border-gray-700">
+                    <h4 class="text-2xl font-bold mb-4 text-blue-300" data-i18n="summary_h4">ملخص الخبرة</h4>
+                    <ul class="space-y-3 text-gray-300 rtl-list">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 ml-2"></i>
+                            <span data-i18n="summary_li1">مبرمجة ألعاب Unity (C#) بخبرة ٤ سنوات.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 ml-2"></i>
+                            <span data-i18n="summary_li2">نشر لعبة واحدة بنجاح على منصة Steam.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 ml-2"></i>
+                            <span data-i18n="summary_li3">متخصصة في أنظمة القتال (Combat Systems) والذكاء الاصطناعي (Behaviour Trees).</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-1 ml-2"></i>
+                            <span data-i18n="summary_li4">خبرة في Git وGitHub وإدارة مشاريع الفريق.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المشاريع (Projects) -->
+    <section id="projects" class="py-20 bg-[#161b22] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="section-heading text-center mx-auto" data-i18n="projects_h3">أبرز المشاريع</h3>
+            <div class="space-y-12 mt-10">
+
+                <!-- المشروع 1: KoroNeko (اللعبة المنشورة) -->
+                <div class="project-card">
+                    <div class="grid md:grid-cols-3 gap-8 items-start">
+                        <!-- معلومات المشروع -->
+                        <div class="md:col-span-2">
+                            <h4 class="text-3xl font-bold mb-3 text-blue-400" data-i18n="p1_title">KoroNeko - لعبة ألغاز منصات (منشورة على Steam)</h4>
+                            <p class="text-gray-400 mb-4" data-i18n="p1_desc">
+                                لعبة ألغاز-منصات (Puzzle-Platformer) منشورة على Steam. ساهمتُ في مرحلة البروتوتايب الرئيسية ثم عملتُ على نظام تحليل معقد لضمان جودة تصميم المراحل.
+                            </p>
+
+                            <h5 class="text-xl font-semibold mb-2 text-white" data-i18n="p1_achieve_h">الإنجازات التقنية الرئيسية:</h5>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 rtl-list">
+                                <li data-i18n="p1_li1">**نظام Solver لحل الألغاز (Core System):** تطوير نظام يقوم باستخراج جميع الحلول الممكنة للغز في المرحلة. تم استخدام هذا النظام في مرحلة متقدمة للتأكد من قابلية حل (Solvability) جميع المستويات بكفاءة، مما يضمن توازن اللعبة.</li>
+                                <li data-i18n="p1_li2">**بروتوتايب اللعب (Prototyping):** إنشاء البروتوتايب الأساسي للمشروع، وتطوير الآليات الحركية الأولية للاعب.</li>
+                                <li data-i18n="p1_li3">**هيكلة الكود (Architecture):** بناء الأساس الكودي لضمان مرونة نظام الألغاز وقابلية إضافة ميكانيكيات جديدة.</li>
+                            </ul>
+                            
+                            <div class="mt-6 flex space-x-4 space-x-reverse">
+                                <a href="https://store.steampowered.com/app/2543350/KoroNeko/" target="_blank" class="btn-primary flex items-center">
+                                    <span data-i18n="p1_steam_link">صفحة Steam</span> <i data-lucide="steam" class="w-5 h-5 mr-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                         <!-- صورة/فيديو المشروع -->
+                        <div class="md:col-span-1">
+                            <figure class="w-full rounded-xl overflow-hidden shadow-xl border border-gray-700">
+                                <div class="aspect-16-9">
+                                    <!-- يجب أن يكون الرابط هنا هو "رابط التضمين" (Embed Link) وليس رابط المشاهدة المباشر -->
+                                    <iframe 
+                                        src="https://drive.google.com/file/d/1qjwcK87d1q8ofbRszMt0EutvGL8uO6ny/preview" 
+                                        title=" KoroNeko Gameplay" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            </figure>
+                        </div
+                    </div>
+                </div>
+                
+                <!-- المشروع 2: أنظمة القتال (Combat Programming) -->
+                <div class="project-card">
+                    <div class="grid md:grid-cols-3 gap-8 items-start">
+                        <!-- معلومات المشروع -->
+                        <div class="md:col-span-2">
+                            <h4 class="text-3xl font-bold mb-3 text-blue-400" data-i18n="p3_title">أنظمة قتال وميكانيكيات متقدمة (Combat & AI Systems)</h4>
+                            <p class="text-gray-400 mb-4" data-i18n="p3_desc">
+                                سلسلة بروتوتايب تركز على بناء أنظمة قتال متينة ومستجيبة لإثراء تجربة اللاعب.
+                            </p>
+
+                            <h5 class="text-xl font-semibold mb-2 text-white" data-i18n="p3_achieve_h">الإنجازات التقنية المحددة:</h5>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 rtl-list">
+                                <li data-i18n="p3_li1">**نظام قتال مبني على الأنيمايشن (Animation-Based Combat):** تصميم وتطبيق نظام قتال حيث يتم التحكم في ضربات اللاعب وتحقق الضرر (Hitboxes) وتوقيت القتال بالكامل من خلال Animation Events، مما يضمن دقة عالية وتوافقاً مع الفن.</li>
+                                <li data-i18n="p3_li2">**نظام أسلحة ديناميكي (Dynamic Weapon System):** تطوير نظام يسمح بتبديل الأسلحة بمرونة وتغيير خصائصها وتأثيرها على القتال دون الحاجة لتغييرات جذرية في كود اللاعب.</li>
+                                <li data-i18n="p3_li3">**سلوكيات الذكاء الاصطناعي (AI Behaviors):** تطوير سلوكيات الأعداء المتقدمة باستخدام Behaviour Designer (Oversive Tree) لتنفيذ منطق اتخاذ القرار المعقد، التتبع، والهجمات الشرطية.</li>
+                            </ul>
+                            
+                            <div class="mt-6 flex space-x-4 space-x-reverse">
+                                <a href="رابط-مجلد-الGifs-للبروتوتايب" target="_blank" class="btn-primary flex items-center">
+                                    <span data-i18n="p3_gifs_link">مشاهدة Gifs للأنظمة</span> <i data-lucide="git-fork" class="w-5 h-5 mr-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                       <!-- صورة/فيديو المشروع -->
+                        <div class="md:col-span-1">
+                            <figure class="w-full rounded-xl overflow-hidden shadow-xl border border-gray-700">
+                                <div class="aspect-16-9">
+                                    <!-- يجب أن يكون الرابط هنا هو "رابط التضمين" (Embed Link) وليس رابط المشاهدة المباشر -->
+                                    <iframe 
+                                        src="https://drive.google.com/file/d/164OzAB4p9uUhsS-6CEXtQffNjJCUZ8v0/preview" 
+                                        title=" Combat System" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            </figure>
+                        </div
+                    </div>
+                </div>
+                
+                <!-- المشروع 3: لعبة السلايم (Game Jam Champion) -->
+                <div class="project-card">
+                    <div class="grid md:grid-cols-3 gap-8 items-start">
+                        <!-- صورة/فيديو المشروع -->
+                        <div class="md:col-span-1">
+                            <figure class="w-full rounded-xl overflow-hidden shadow-xl border border-gray-700">
+                                <div class="aspect-16-9">
+                                    <!-- [استبدلي هذا الرابط برابط فيديو/GIF للعبة السلايم] -->
+                                    <iframe 
+                                        src="https://drive.google.com/file/d/1dXRx-fR_M48urEuxmNlvD6wYBPGVY2UM/preview" 
+                                        title="Slime Game Jam Gameplay" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            </figure>
+                        </div>
+                        <!-- معلومات المشروع -->
+                        <div class="md:col-span-2">
+                            <h4 class="text-3xl font-bold mb-3 text-blue-400" data-i18n="p5_title">لعبة السلايم - بطل Game Jam (المركز الثاني)</h4>
+                            <p class="text-gray-400 mb-4" data-i18n="p5_desc">
+                                لعبة مستوحاة من Katamari Damacy، حيث يلعب اللاعب كسلايم يبتلع الأجسام ويكبر حجمه تدريجياً. حازت على **المركز الثاني** في Game Jam Game Champions، مما يوضح القدرة على إنتاج أنظمة مستقرة تحت ضغط الوقت.
+                            </p>
+
+                            <h5 class="text-xl font-semibold mb-2 text-white" data-i18n="p5_achieve_h">المهارات والأنظمة المطورة (Gameplay Programming):</h5>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 rtl-list">
+                                <li data-i18n="p5_li1">**نظام الامتصاص والنمو الديناميكي (Scaling & Absorption):** برمجة آلية النمو المستمر للسلايم ودمج العناصر المبتلعة داخل جسمه الهلامي، مع تحديث محيط الاصطدام (Collider) بشكل لحظي.</li>
+                                <li data-i18n="p5_li2">**فيزياء الشخصية (Character Physics):** تطوير نظام فيزيائي مخصص للشخصية لمحاكاة حركة الجسم الهلامي، مما يضيف شعوراً فريداً للعب.</li>
+                                <li data-i18n="p5_li3">**إدارة مدخلات اللعب (Input Handling):** التعامل مع مدخلات اللاعب وتنفيذ حركات الشخصية والاستجابة لآليات اللعب الأساسية.</li>
+                            </ul>
+                            
+                            <div class="mt-6 flex space-x-4 space-x-reverse">
+                                <a href="رابط-لصفحة-اللعبة-على-Itch.io-أو-Drive" target="_blank" class="btn-primary flex items-center">
+                                    <span data-i18n="p5_game_link">مشاهدة اللعبة/الفيديو</span> <i data-lucide="trophy" class="w-5 h-5 mr-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- المشروع 4: Quick Quack (Local Multiplayer) -->
+                <div class="project-card">
+                    <div class="grid md:grid-cols-3 gap-8 items-start">
+                         <!-- صورة/فيديو المشروع -->
+                        <div class="md:col-span-1">
+                            <figure class="w-full rounded-xl overflow-hidden shadow-xl border border-gray-700">
+                                <div class="aspect-16-9">
+                                    <!-- يجب أن يكون الرابط هنا هو "رابط التضمين" (Embed Link) وليس رابط المشاهدة المباشر -->
+                                    <iframe 
+                                        src="https://drive.google.com/file/d/1VJ1bSq97TKfcHuWPrJZbuy4QA6Ipmnpc/preview" 
+                                        title="Quick Quack Gamplay" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen
+                                    ></iframe>
+                                </div>
+                            </figure>
+                        </div
+                        <!-- معلومات المشروع -->
+                        <div class="md:col-span-2">
+                            <h4 class="text-3xl font-bold mb-3 text-blue-400" data-i18n="p4_title">Quick Quack - لعبة محلية متعددة اللاعبين (Local Multiplayer)</h4>
+                            <p class="text-gray-400 mb-4" data-i18n="p4_desc">
+                                لعبة تنافسية محلية متعددة اللاعبين تهدف لإظهار الكفاءة في إدارة مدخلات اللاعبين المتعددين والتفاعل السلس في نفس البيئة.
+                            </p>
+
+                            <h5 class="text-xl font-semibold mb-2 text-white" data-i18n="p4_skills_h">المهارات الموضحة والأنظمة المطورة:</h5>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 rtl-list">
+                                <li data-i18n="p4_li1">**إدارة المدخلات المتعددة (Input Management):** تصميم وتطبيق آليات تحكم اللاعبين المتعددين وضمان تزامن التفاعلات المباشرة.</li>
+                                <li data-i18n="p4_li2">**نظام التحكم (Controller System):** استخدام **Unity Input System** لتخصيص وحدات التحكم المتعددة ولوحات المفاتيح المختلفة لكل لاعب.</li>
+                                <li data-i18n="p4_li3">**منطق التفاعل (Interaction Logic):** برمجة منطق اللعب التنافسي والتفاعلات بين اللاعبين (مثل الاصطدام، التقاط العناصر، وما إلى ذلك) بكود نظيف وفعال.</li>
+                            </ul>
+
+                            <div class="mt-6 flex space-x-4 space-x-reverse">
+                                <a href="https://drive.google.com/file/d/1VJ1bSq97TKfcHuWPrJZbuy4QA6Ipmnpc/view?usp=drive_link" target="_blank" class="btn-primary flex items-center">
+                                    <span data-i18n="p4_drive_link">مشاهدة الفيديو (Google Drive)</span> <i data-lucide="gamepad" class="w-5 h-5 mr-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم البروتوتايبات (R&D Prototypes) -->
+    <section id="prototypes" class="py-20 bg-[#0d1117] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="section-heading text-center mx-auto" data-i18n="prototypes_h3">معرض البروتوتايبات (R&D Prototypes)</h3>
+            <p class="text-lg text-gray-400 mb-10 text-center max-w-3xl mx-auto" data-i18n="prototypes_desc">
+                استعراض لأعمال البحث والتطوير السريعة (R&D) التي تبرز الخبرة في آليات اللعب المعقدة، وأدوات المحرر المخصصة، وحل المشكلات التقنية.
+            </p>
+            
+            <!-- حاوية التمرير الأفقي للبطاقات -->
+            <div class="horizontal-scroll-container flex space-x-6 space-x-reverse">
+
+                <!-- بطاقة 1: تفاعل حبال الفيزياء -->
+                <div class="flex-shrink-0 w-80 project-card cursor-pointer hover:bg-[#1f2937]" onclick="showPrototypeDetails('physics-ropes')">
+                    <figure class="w-full rounded-lg overflow-hidden shadow-xl border border-gray-700 mb-4">
+                        <div class="aspect-16-9">
+                            <div class="w-full h-full bg-gray-700 flex items-center justify-center text-gray-400 text-sm">
+                                <i data-lucide="lasso-select" class="w-8 h-8 mr-2"></i> <span data-i18n="proto1_img_placeholder">GIF: تفاعل حبال الفيزياء</span>
+                            </div>
+                        </div>
+                    </figure>
+                    <h5 class="text-xl font-bold text-blue-300 truncate" data-i18n="proto1_title">تفاعل حبال الفيزياء (Physics Ropes)</h5>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proto1_desc">نظام ألغاز بيئية متقدم يعتمد على القيود (Constraints) و Unity Physics.</p>
+                </div>
+
+                <!-- بطاقة 2: ميكانيكيات العدو الميكانيكي -->
+                <div class="flex-shrink-0 w-80 project-card cursor-pointer hover:bg-[#1f2937]" onclick="showPrototypeDetails('enemy-mechanic')">
+                    <figure class="w-full rounded-lg overflow-hidden shadow-xl border border-gray-700 mb-4">
+                        <div class="aspect-16-9">
+                            <div class="w-full h-full bg-gray-700 flex items-center justify-center text-gray-400 text-sm">
+                                <i data-lucide="robot" class="w-8 h-8 mr-2"></i> <span data-i18n="proto2_img_placeholder">GIF: سلوك عدو ميكانيكي</span>
+                            </div>
+                        </div>
+                    </figure>
+                    <h5 class="text-xl font-bold text-blue-300 truncate" data-i18n="proto2_title">ميكانيكيات العدو الميكانيكي</h5>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proto2_desc">تصميم سلوكيات AI معقدة باستخدام Behaviour Designer.</p>
+                </div>
+
+                <!-- بطاقة 3: أدوات المحرر المخصصة -->
+                <div class="flex-shrink-0 w-80 project-card cursor-pointer hover:bg-[#1f2937]" onclick="showPrototypeDetails('editor-tools')">
+                    <figure class="w-full rounded-lg overflow-hidden shadow-xl border border-gray-700 mb-4">
+                        <div class="aspect-16-9">
+                            <div class="w-full h-full bg-gray-700 flex items-center justify-center text-gray-400 text-sm">
+                                <i data-lucide="tool" class="w-8 h-8 mr-2"></i> <span data-i18n="proto3_img_placeholder">GIF: أدوات المحرر المخصصة</span>
+                            </div>
+                        </div>
+                    </figure>
+                    <h5 class="text-xl font-bold text-blue-300 truncate" data-i18n="proto3_title">أدوات المحرر المخصصة (Editor Tools)</h5>
+                    <p class="text-sm text-gray-400 mt-1" data-i18n="proto3_desc">برمجة Editor Scripting لتحسين كفاءة سير العمل للفريق.</p>
+                </div>
+
+                <!-- يمكنك إضافة المزيد من البطاقات هنا بنفس التنسيق -->
+
+            </div>
+            
+            <!-- زر مشاهدة الـ Gifs على درايف أو جيت هب -->
+            <div class="text-center mt-8">
+                <a href="رابط-مجلد-Gifs-الخاص-بالبروتوتايبات" target="_blank" class="btn-primary flex items-center justify-center mx-auto w-full max-w-sm">
+                    <span data-i18n="proto_all_gifs_link">مشاهدة مجلد جميع البروتوتايبات (Gifs)</span> <i data-lucide="folder-open" class="w-5 h-5 mr-2"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- قسم المهارات التقنية (Skills) -->
+    <section id="skills" class="py-20 bg-[#161b22] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="section-heading text-center mx-auto" data-i18n="skills_h3">المهارات التقنية</h3>
+            
+            <div class="mt-10 max-w-4xl mx-auto text-center">
+                <h4 class="text-2xl font-bold mb-4 text-blue-300" data-i18n="s1_h4">محركات وبرمجة</h4>
+                <div class="flex flex-wrap justify-center">
+                    <span class="skill-badge">Unity Engine (4 سنوات)</span>
+                    <span class="skill-badge">C# (متقدم)</span>
+                    <span class="skill-badge">Git & GitHub/GitLab</span>
+                    <span class="skill-badge">Unity APIs & Editor Scripting</span>
+                    <span class="skill-badge">Visual Studio</span>
+                </div>
+
+                <h4 class="text-2xl font-bold mb-4 mt-8 text-blue-300" data-i18n="s2_h4">أنظمة وتخصص</h4>
+                <div class="flex flex-wrap justify-center">
+                    <span class="skill-badge">Combat Systems Programming</span>
+                    <span class="skill-badge">AI Behaviors (Behaviour Designer/Oversive Tree)</span>
+                    <span class="skill-badge">Local Multiplayer & Input Management</span>
+                    <span class="skill-badge">Puzzle Solver Systems</span>
+                    <span class="skill-badge">Unity Physics (Ropes, Constraints)</span>
+                    <span class="skill-badge">Animation Integration (Events)</span>
+                    <span class="skill-badge">Design Patterns (State, MVC)</span>
+                    <span class="skill-badge">Optimization & Object Pooling</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التواصل (Contact) -->
+    <section id="contact" class="py-20 bg-[#0d1117] border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h3 class="section-heading mx-auto" data-i18n="contact_h3">تواصل معي</h3>
+            <p class="text-lg text-gray-400 mb-8" data-i18n="contact_p">
+                مهتمة بالفرص الجديدة أو مشاريع التعاون. لا تتردد في التواصل معي.
+            </p>
+            <div class="flex flex-col items-center space-y-4">
+                <a href="mailto:r.98.alfar@gmail.com" class="btn-primary w-full max-w-xs flex items-center justify-center">
+                    <i data-lucide="mail" class="w-5 h-5 ml-2"></i> <span data-i18n="contact_email">r.98.alfar@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/your-profile" target="_blank" class="px-6 py-3 bg-gray-600 text-white font-bold rounded-xl transition duration-300 hover:bg-gray-700 shadow-lg w-full max-w-xs flex items-center justify-center">
+                    <i data-lucide="linkedin" class="w-5 h-5 ml-2"></i> <span data-i18n="contact_linkedin">الملف الشخصي على LinkedIn</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل (Footer) -->
+    <footer class="bg-[#0d1117] py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
+            <p class="mb-2" data-i18n="footer_p1">&copy; 2024 روان الفار. جميع الحقوق محفوظة. تم البناء باستخدام Tailwind CSS.</p>
+            <p class="mt-4 text-xs text-gray-600" data-i18n="footer_p2_note">
+                **ملاحظة النشر (Deployment):** يمكنكِ نشر هذا الموقع بسهولة ومجاناً عبر **GitHub Pages** (برفع الملف إلى مستودع وتفعيل خاصية Pages) أو باستخدام **Netlify / Vercel** لربطه مباشرة بمستودعكِ على GitHub.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // تهيئة أيقونات Lucide
+        lucide.createIcons();
+
+        const langToggle = document.getElementById('lang-toggle');
+        const htmlElement = document.documentElement;
+
+        // 1. قاموس الترجمات (تم تحديثه)
+        const translations = {
+            'ar': {
+                'title': 'بورتفوليو - روان الفار',
+                'header_name': 'روان الفار',
+                'nav_about': 'عني',
+                'nav_projects': 'المشاريع',
+                'nav_prototypes': 'البروتوتايبات', // مفتاح جديد
+                'nav_skills': 'المهارات التقنية',
+                'nav_contact': 'تواصل',
+                'hero_h2': 'أهلاً، أنا روان! مبرمجة ألعاب Unity',
+                'hero_p': 'خبرة ٤ سنوات في تطوير الألعاب باستخدام محرك Unity ولغة C#. متخصصة في برمجة أنظمة القتال الديناميكية، الذكاء الاصطناعي (Oversive Tree)، وحلول الألغاز المعقدة. فخورة بنشر لعبتي **KoroNeko** على Steam.',
+                'hero_btn': 'شاهد مشاريعي',
+                'about_h3': 'عني وخبرتي',
+                'about_p1': 'بدأت مسيرتي في مجال تطوير الألعاب منذ ٤ سنوات، مع شغف خاص بتحويل الأفكار المعقدة إلى كود فعال وممتع. أركز على بناء بنية كود متينة وقابلة للتوسع (Scalable Architecture) تضمن سهولة الصيانة والعمل الجماعي.',
+                'about_p2': 'خلال هذه السنوات، اكتسبت خبرة عميقة في التعامل مع أدوات Unity المختلفة (مثل DOTS، URP/HDRP، وTimeline) وأتقنت استخدام أنماط التصميم (Design Patterns) المناسبة لبرمجة الألعاب.',
+                'about_cv_link': 'تحميل السيرة الذاتية (CV)',
+                'summary_h4': 'ملخص الخبرة',
+                'summary_li1': 'مبرمجة ألعاب Unity (C#) بخبرة ٤ سنوات.',
+                'summary_li2': 'نشر لعبة واحدة بنجاح على منصة Steam.',
+                'summary_li3': 'متخصصة في أنظمة القتال (Combat Systems) والذكاء الاصطناعي (Behaviour Trees).',
+                'summary_li4': 'خبرة في Git وGitHub وإدارة مشاريع الفريق.',
+                'projects_h3': 'أبرز المشاريع',
+                // P1: KoroNeko
+                'p1_title': 'KoroNeko - لعبة ألغاز منصات (منشورة على Steam)',
+                'p1_desc': 'لعبة ألغاز-منصات (Puzzle-Platformer) منشورة على Steam. ساهمتُ في مرحلة البروتوتايب الرئيسية ثم عملتُ على نظام تحليل معقد لضمان جودة تصميم المراحل.',
+                'p1_achieve_h': 'الإنجازات التقنية الرئيسية:',
+                'p1_li1': '**نظام Solver لحل الألغاز (Core System):** تطوير نظام يقوم باستخراج جميع الحلول الممكنة للغز في المرحلة. تم استخدام هذا النظام في مرحلة متقدمة للتأكد من قابلية حل (Solvability) جميع المستويات بكفاءة، مما يضمن توازن اللعبة.',
+                'p1_li2': '**بروتوتايب اللعب (Prototyping):** إنشاء البروتوتايب الأساسي للمشروع، وتطوير الآليات الحركية الأولية للاعب.',
+                'p1_li3': '**هيكلة الكود (Architecture):** بناء الأساس الكودي لضمان مرونة نظام الألغاز وقابلية إضافة ميكانيكيات جديدة.',
+                'p1_steam_link': 'صفحة Steam',
+                'p1_video_link': 'مشاهدة فيديو',
+                'p1_placeholder': 'يُرجى إدراج رابط فيديو/صورة',
+                // P2: Combat & AI Systems
+                'p3_title': 'أنظمة قتال وميكانيكيات متقدمة (Combat & AI Systems)',
+                'p3_desc': 'سلسلة بروتوتايب تركز على بناء أنظمة قتال متينة ومستجيبة لإثراء تجربة اللاعب.',
+                'p3_achieve_h': 'الإنجازات التقنية المحددة:',
+                'p3_li1': '**نظام قتال مبني على الأنيمايشن (Animation-Based Combat):** تصميم وتطبيق نظام قتال حيث يتم التحكم في ضربات اللاعب وتحقق الضرر (Hitboxes) وتوقيت القتال بالكامل من خلال Animation Events، مما يضمن دقة عالية وتوافقاً مع الفن.',
+                'p3_li2': '**نظام أسلحة ديناميكي (Dynamic Weapon System):** تطوير نظام يسمح بتبديل الأسلحة بمرونة وتغيير خصائصها وتأثيرها على القتال دون الحاجة لتغييرات جذرية في كود اللاعب.',
+                'p3_li3': '**سلوكيات الذكاء الاصطناعي (AI Behaviors):** تطوير سلوكيات الأعداء المتقدمة باستخدام Behaviour Designer (Oversive Tree) لتنفيذ منطق اتخاذ القرار المعقد، التتبع، والهجمات الشرطية.',
+                'p3_gifs_link': 'مشاهدة Gifs للأنظمة',
+                'p3_placeholder': 'يُرجى إدراج رابط فيديو/صورة',
+                // P3: Slime Game Jam
+                'p5_title': 'لعبة السلايم - بطل Game Jam (المركز الثاني)',
+                'p5_desc': 'لعبة مستوحاة من Katamari Damacy، حيث يلعب اللاعب كسلايم يبتلع الأجسام ويكبر حجمه تدريجياً. حازت على **المركز الثاني** في Game Jam Game Champions، مما يوضح القدرة على إنتاج أنظمة مستقرة تحت ضغط الوقت.',
+                'p5_achieve_h': 'المهارات والأنظمة المطورة (Gameplay Programming):',
+                'p5_li1': '**نظام الامتصاص والنمو الديناميكي (Scaling & Absorption):** برمجة آلية النمو المستمر للسلايم ودمج العناصر المبتلعة داخل جسمه الهلامي، مع تحديث محيط الاصطدام (Collider) بشكل لحظي.',
+                'p5_li2': '**فيزياء الشخصية (Character Physics):** تطوير نظام فيزيائي مخصص للشخصية لمحاكاة حركة الجسم الهلامي، مما يضيف شعوراً فريداً للعب.',
+                'p5_li3': '**إدارة مدخلات اللعب (Input Handling):** التعامل مع مدخلات اللاعب وتنفيذ حركات الشخصية والاستجابة لآليات اللعب الأساسية.',
+                'p5_game_link': 'مشاهدة اللعبة/الفيديو',
+                'p5_placeholder': 'يُرجى إدراج رابط فيديو/صورة',
+                
+                // P4: Quick Quack (Local Multiplayer)
+                'p4_title': 'Quick Quack - لعبة محلية متعددة اللاعبين (Local Multiplayer)',
+                'p4_desc': 'لعبة تنافسية محلية متعددة اللاعبين تهدف لإظهار الكفاءة في إدارة مدخلات اللاعبين المتعددين والتفاعل السلس في نفس البيئة.',
+                'p4_skills_h': 'المهارات الموضحة والأنظمة المطورة:',
+                'p4_li1': '**إدارة المدخلات المتعددة (Input Management):** تصميم وتطبيق آليات تحكم اللاعبين المتعددين وضمان تزامن التفاعلات المباشرة.',
+                'p4_li2': '**نظام التحكم (Controller System):** استخدام **Unity Input System** لتخصيص وحدات التحكم المتعددة ولوحات المفاتيح المختلفة لكل لاعب.',
+                'p4_li3': '**منطق التفاعل (Interaction Logic):** برمجة منطق اللعب التنافسي والتفاعلات بين اللاعبين (مثل الاصطدام، التقاط العناصر، وما إلى ذلك) بكود نظيف وفعال.',
+                'p4_drive_link': 'مشاهدة الفيديو (Google Drive)',
+                'p4_placeholder': 'يُرجى إدراج رابط فيديو/صورة',
+                
+                // القسم الجديد: البروتوتايبات
+                'prototypes_h3': 'معرض البروتوتايبات (R&D Prototypes)',
+                'prototypes_desc': 'استعراض لأعمال البحث والتطوير السريعة (R&D) التي تبرز الخبرة في آليات اللعب المعقدة، وأدوات المحرر المخصصة، وحل المشكلات التقنية.',
+                'proto1_img_placeholder': 'GIF: تفاعل حبال الفيزياء',
+                'proto1_title': 'تفاعل حبال الفيزياء (Physics Ropes)',
+                'proto1_desc': 'نظام ألغاز بيئية متقدم يعتمد على القيود (Constraints) و Unity Physics.',
+                'proto2_img_placeholder': 'GIF: سلوك عدو ميكانيكي',
+                'proto2_title': 'ميكانيكيات العدو الميكانيكي',
+                'proto2_desc': 'تصميم سلوكيات AI معقدة باستخدام Behaviour Designer.',
+                'proto3_img_placeholder': 'GIF: أدوات المحرر المخصصة',
+                'proto3_title': 'أدوات المحرر المخصصة (Editor Tools)',
+                'proto3_desc': 'برمجة Editor Scripting لتحسين كفاءة سير العمل للفريق.',
+                'proto_all_gifs_link': 'مشاهدة مجلد جميع البروتوتايبات (Gifs)',
+                
+                'skills_h3': 'المهارات التقنية',
+                's1_h4': 'محركات وبرمجة',
+                's2_h4': 'أنظمة وتخصص',
+                'contact_h3': 'تواصل معي',
+                'contact_p': 'مهتمة بالفرص الجديدة أو مشاريع التعاون. لا تتردد في التواصل معي.',
+                'contact_email': 'r.98.alfar@gmail.com',
+                'contact_linkedin': 'الملف الشخصي على LinkedIn',
+                'footer_p1': '&copy; 2024 روان الفار. جميع الحقوق محفوظة. تم البناء باستخدام Tailwind CSS.',
+                'footer_p2_note': '**ملاحظة النشر (Deployment):** يمكنكِ نشر هذا الموقع بسهولة ومجاناً عبر **GitHub Pages** (برفع الملف إلى مستودع وتفعيل خاصية Pages) أو باستخدام **Netlify / Vercel** لربطه مباشرة بمستودعكِ على GitHub.'
+            },
+            'en': {
+                'title': 'Portfolio - Rawan Alfar',
+                'header_name': 'Rawan Alfar',
+                'nav_about': 'About',
+                'nav_projects': 'Projects',
+                'nav_prototypes': 'Prototypes (R&D)', // New Key
+                'nav_skills': 'Technical Skills',
+                'nav_contact': 'Contact',
+                'hero_h2': 'Hello, I\'m Rawan! A Unity Game Programmer',
+                'hero_p': '4 years of experience in game development using the Unity engine and C#. Specialized in dynamic combat systems, AI (Oversive Tree), and complex puzzle solving solutions. Proudly published my game **KoroNeko** on Steam.',
+                'hero_btn': 'View My Projects',
+                'about_h3': 'About Me & Experience',
+                'about_p1': 'I started my game development journey 4 years ago, with a passion for transforming complex ideas into efficient and engaging code. I focus on building robust, scalable code architecture to ensure ease of maintenance and collaboration.',
+                'about_p2': 'Throughout these years, I have gained deep expertise in handling various Unity tools (such as DOTS, URP/HDRP, and Timeline) and mastering suitable Design Patterns for game programming.',
+                'about_cv_link': 'Download CV (Resume)',
+                'summary_h4': 'Experience Summary',
+                'summary_li1': 'Unity Game Programmer (C#) with 4 years of experience.',
+                'summary_li2': '1 game successfully published on Steam.',
+                'summary_li3': 'Specialized in Combat Systems and AI (Behaviour Trees).',
+                'summary_li4': 'Experienced with Git and GitHub for code management and team projects.',
+                'projects_h3': 'Featured Projects',
+                // P1: KoroNeko
+                'p1_title': 'KoroNeko - Puzzle Platformer (Published on Steam)',
+                'p1_desc': 'A Puzzle-Platformer game published on Steam. I contributed to the initial prototyping phase and later developed a complex analysis system to ensure stage design quality.',
+                'p1_achieve_h': 'Key Technical Achievements:',
+                'p1_li1': '**Puzzle Solver System (Core System):** Developed a system that extracts all possible solutions for a stage\'s puzzle. This was used in the later stages to efficiently confirm the solvability of all levels, ensuring game balance.',
+                'p1_li2': '**Gameplay Prototyping:** Created the basic project prototype and developed the initial player movement mechanics.',
+                'p1_li3': '**Code Architecture:** Built the foundational code to ensure the puzzle system\'s flexibility and scalability for adding new mechanics.',
+                'p1_steam_link': 'Steam Page',
+                'p1_video_link': 'Watch Video',
+                'p1_placeholder': 'Please insert video/image link',
+                // P2: Combat & AI Systems
+                'p3_title': 'Advanced Combat & AI Systems',
+                'p3_desc': 'A series of prototypes focused on building robust and responsive combat systems to enhance the player experience.',
+                'p3_achieve_h': 'Specific Technical Achievements:',
+                'p3_li1': '**Animation-Based Combat System:** Designed and implemented a combat system where player strikes, hit detection (Hitboxes), and combat timing are entirely controlled via Animation Events, ensuring high accuracy and artistic alignment.',
+                'p3_li2': '**Dynamic Weapon System:** Developed a system that allows flexible weapon switching and changing their properties and effects on combat without major changes to player code.',
+                'p3_li3': '**AI Behaviors:** Developed advanced enemy behaviors using Behaviour Designer (Oversive Tree) to implement complex decision-making logic, tracking, and conditional attacks.',
+                'p3_gifs_link': 'View System Gifs',
+                'p3_placeholder': 'Please insert video/image link',
+                // P3: Slime Game Jam
+                'p5_title': 'Slime Game - Game Jam Champion (2nd Place)',
+                'p5_desc': 'A Katamari Damacy-inspired game where the player controls a slime that absorbs objects and gradually grows in size. Achieved **2nd place** in the Game Jam Game Champions, demonstrating the ability to produce stable systems under time pressure.',
+                'p5_achieve_h': 'Skills & Systems Developed (Gameplay Programming):',
+                'p5_li1': '**Dynamic Scaling & Absorption System:** Programmed the continuous growth mechanism and the integration of absorbed items within the slime\'s body, with real-time Collider updates.',
+                'p5_li2': '**Character Physics:** Developed a custom character physics system to simulate the wobbly, jelly-like movement of the slime, providing a unique feel to the gameplay.',
+                'p5_li3': '**Input Handling:** Managed player inputs and implemented character movement and responsiveness to core gameplay mechanics.',
+                'p5_game_link': 'View Game/Video',
+                'p5_placeholder': 'Please insert video/image link',
+                
+                // P4: Quick Quack (Local Multiplayer)
+                'p4_title': 'Quick Quack - Local Multiplayer Game',
+                'p4_desc': 'A competitive local multiplayer game designed to showcase competency in managing multiple player inputs and seamless interaction within the same environment.',
+                'p4_skills_h': 'Skills Demonstrated & Systems Developed:',
+                'p4_li1': '**Multiple Input Management:** Designed and implemented multi-player control mechanics, ensuring synchronized and direct interactions.',
+                'p4_li2': '**Controller System:** Utilized the **Unity Input System** to map multiple controllers and keyboards for various players.',
+                'p4_li3': '**Interaction Logic:** Programmed the competitive gameplay logic and player interactions (e.g., collision, item pickup, etc.) with clean and efficient code.',
+                'p4_drive_link': 'View Video (Google Drive)',
+                'p4_placeholder': 'Please insert video/image link',
+                
+                // The New Section: Prototypes
+                'prototypes_h3': 'Prototypes Showcase (R&D Prototypes)',
+                'prototypes_desc': 'A review of rapid Research & Development (R&D) work highlighting expertise in complex gameplay mechanics, custom editor tools, and technical problem-solving.',
+                'proto1_img_placeholder': 'GIF: Physics Ropes Interaction',
+                'proto1_title': 'Physics Ropes Interaction',
+                'proto1_desc': 'Advanced environmental puzzle system relying on Constraints and Unity Physics.',
+                'proto2_img_placeholder': 'GIF: Mechanical Enemy Behavior',
+                'proto2_title': 'Mechanical Enemy Mechanics',
+                'proto2_desc': 'Designed complex AI behaviors using Behaviour Designer.',
+                'proto3_img_placeholder': 'GIF: Custom Editor Tools',
+                'proto3_title': 'Custom Editor Tools',
+                'proto3_desc': 'Programming Editor Scripting to enhance workflow efficiency for the team.',
+                'proto_all_gifs_link': 'View All Prototypes (Gifs) Folder',
+
+                'skills_h3': 'Technical Skills',
+                's1_h4': 'Engines & Programming',
+                's2_h4': 'Systems & Specialization',
+                'contact_h3': 'Contact Me',
+                'contact_p': 'Interested in new opportunities or collaboration projects. Feel free to reach out.',
+                'contact_email': 'r.98.alfar@gmail.com',
+                'contact_linkedin': 'LinkedIn Profile',
+                'footer_p1': '&copy; 2024 Rawan Alfar. All Rights Reserved. Built using Tailwind CSS.',
+                'footer_p2_note': '**Deployment Note:** You can easily and freely deploy this site via **GitHub Pages** (by uploading the file to a repository and activating the Pages feature) or by using **Netlify / Vercel** to connect directly to your GitHub repository.'
+            }
+        };
+
+        // 2. دالة تبديل اللغة
+        function setLanguage(lang) {
+            const currentTranslations = translations[lang];
+
+            // تحديث محتوى جميع العناصر التي تحمل خاصية data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (currentTranslations[key]) {
+                    // نستخدم innerHTML للسماح بالـ **Tags** داخل الترجمات
+                    element.innerHTML = currentTranslations[key]; 
+                }
+            });
+
+            // 3. تحديث الاتجاه (Direction)
+            const isRTL = lang === 'ar';
+            htmlElement.setAttribute('lang', lang);
+            htmlElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+
+            // 4. تحديث الخط (Font)
+            const styleElement = document.querySelector('style');
+            if (styleElement) {
+                // نبحث عن خاصية font-family لتغيير الخط الرئيسي بين القاهرة و Inter
+                const styleContent = styleElement.textContent;
+                const newStyleContent = styleContent.replace(
+                    /font-family: '(.*?)', 'Inter', sans-serif;/,
+                    isRTL ? "font-family: 'Cairo', 'Inter', sans-serif;" : "font-family: 'Inter', sans-serif;"
+                );
+                styleElement.textContent = newStyleContent;
+            }
+
+            // 5. تحديث نص الزر
+            langToggle.textContent = isRTL ? 'English' : 'العربية';
+            langToggle.setAttribute('data-current-lang', lang);
+            
+            // تحديث اتجاه الأيقونات بناءً على الاتجاه
+            const listIcons = document.querySelectorAll('.rtl-list > li > i');
+            listIcons.forEach(icon => {
+                if (isRTL) {
+                    icon.classList.remove('mr-2');
+                    icon.classList.add('ml-2');
+                } else {
+                    icon.classList.remove('ml-2');
+                    icon.classList.add('mr-2');
+                }
+            });
+            
+            const linkIcons = document.querySelectorAll('.btn-primary i, .px-6 i');
+            linkIcons.forEach(icon => {
+                if (isRTL) {
+                    icon.classList.remove('mr-2');
+                    icon.classList.add('ml-2');
+                } else {
+                    icon.classList.remove('ml-2');
+                    icon.classList.add('mr-2');
+                }
+            });
+        }
+        
+        // دالة لعرض تفاصيل البروتوتايب (مُحاكاة لصفحة التفاصيل)
+        function showPrototypeDetails(id) {
+            let details = {};
+            
+            switch(id) {
+                case 'physics-ropes':
+                    details = {
+                        ar: "تفاعل حبال الفيزياء: يتطلب هذا النظام فهماً عميقاً لـ Unity Constraints و Joints لتحقيق سلوك فيزيائي واقعي ومتفاعل مع ألغاز العالم. يثبت القدرة على حل المشاكل الفيزيائية المعقدة.",
+                        en: "Physics Ropes Interaction: This system requires a deep understanding of Unity Constraints and Joints to achieve realistic, interactive physics behavior for environmental puzzles. Proves complex physics problem-solving capability."
+                    };
+                    break;
+                case 'enemy-mechanic':
+                    details = {
+                        ar: "ميكانيكيات العدو الميكانيكي: تم استخدام Behaviour Designer لإنشاء شجرة سلوك (Behavior Tree) تحدد منطق العدو المعقد مثل التتبع، التوقف الشرطي، والهجمات الزمنية. يوضح الكفاءة في برمجة الذكاء الاصطناعي المُعتمد على الحالة.",
+                        en: "Mechanical Enemy Mechanics: Behaviour Designer was utilized to create a Behavior Tree defining complex enemy logic such as tracking, conditional stops, and timed attacks. Demonstrates proficiency in state-driven AI programming."
+                    };
+                    break;
+                case 'editor-tools':
+                    details = {
+                        ar: "أدوات المحرر المخصصة: تطوير أدوات Editor Scripting لتمكين المصممين من تعديل خصائص معقدة للمراحل بسرعة دون الحاجة لتغيير الكود مباشرة. مثال على الكفاءة في تحسين سير العمل (Workflow) للفريق.",
+                        en: "Custom Editor Tools: Developed Editor Scripting tools to allow designers to quickly modify complex stage properties without directly changing the code. An example of proficiency in optimizing team workflow."
+                    };
+                    break;
+            }
+            
+            const currentLang = langToggle.getAttribute('data-current-lang') || 'ar';
+            const message = details[currentLang] || details['ar']; 
+            
+            // بدلاً من التوجه لصفحة جديدة، سنستخدم نافذة معلومات بسيطة (Modal/Alert) في هذا المثال
+            // في الواقع، يمكنكِ توجيه المستخدم لصفحة تفاصيل HTML منفصلة.
+            alert(message); 
+        }
+
+
+        // 6. معالج حدث النقر
+        langToggle.addEventListener('click', () => {
+            const currentLang = langToggle.getAttribute('data-current-lang') || 'ar';
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            setLanguage(newLang);
+        });
+
+        // تعيين اللغة الأولية عند التحميل
+        // يتم استخدام اللغة 'ar' الافتراضية في الـ HTML، لكن نضبط الـ JS للتأكد
+        window.onload = () => {
+            setLanguage('ar'); // البدء باللغة العربية
+            lucide.createIcons(); // التأكد من تهيئة الأيقونات
+        };
+    </script>
+</body>
+</html>
